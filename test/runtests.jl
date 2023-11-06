@@ -5,6 +5,7 @@ using .hemisphere
     
     
     include("testU.jl")
+    include("testEta.jl")
 
 
 end
