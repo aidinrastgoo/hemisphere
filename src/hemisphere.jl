@@ -3,10 +3,14 @@ module hemisphere
 import Pkg
 Pkg.add("SpecialFunctions")
 
-include("U_nk.jl")
+include("A.jl")
+include("M.jl")
 
+
+export calculate_A
 export A_kn
 export create_matrix
-export U
+export η_k
+export generate_U_matrix
 
 end # module hemisphere
