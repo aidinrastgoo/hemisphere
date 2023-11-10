@@ -2,3 +2,6 @@ name = "hemisphere"
 uuid = "7ac44993-16c8-40f9-9bec-8e3d47c575d7"
 authors = ["Aidin Rastgoo <aidinrastgoo@gmail.com>"]
 version = "0.1.0"
+
+[deps]
+SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
