@@ -2,8 +2,8 @@ using Test
 using .hemisphere
 @testset "hemisphere" begin
     
-    
-    include("testU.jl")
+    include("testA.jl")
+    include("testB.jl")
 
 
 end
