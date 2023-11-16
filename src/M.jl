@@ -67,8 +67,3 @@ function calculate_M(radius, ε_r1, ε_r2, n_max, k_max)
     end
     return @show M
 end
-
-
-
-
-
