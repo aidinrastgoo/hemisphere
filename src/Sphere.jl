@@ -28,7 +28,7 @@ function calculate_MSph(radius, ε_r1, n_max, k_max)
         end
     end
     
-    return @show M_s
+    return M_s
 end
 
 function calculate_ASph(Amplitude, ε_r1, k_max)
@@ -39,4 +39,29 @@ function calculate_ASph(Amplitude, ε_r1, k_max)
     end
     
     return A_s
+end
+
+function calculate_BSphere(Amplitude, radius, ε_r1, n_max, k_max)
+    M_s = calculate_MSph(radius, ε_r1, n_max, k_max)
+    A_s = calculate_ASph(Amplitude, ε_r1, k_max)
+    B_s = A_s/ M_s
+    return B_s
+end
+
+function calculate_in(Amplitude, radius, ε_r1, n_max, k_max)
+    B = calculate_BSphere(Amplitude, radius, ε_r1, n_max, k_max)
+    σ = generate_σ(k_max, k_max)
+
+    S1 = zeros(Float64, k_max)
+    S2 = zeros(Float64, k_max)
+    S3 = zeros(Float64, k_max, k_max)
+
+    for k in 0:k_max-1
+        S1[k+1] = B[1, k+1] * radius^(-k-1)  # Accessing B as a matrix
+        S2[k+1] = radius * Amplitude * σ[2, k+1]
+        S3[k+1, k+1] = (radius^k) * σ[k+1, k+1]
+    end
+
+    S = (S1' * σ - S2') / S3  # Matrix division using /
+    return S
 end
