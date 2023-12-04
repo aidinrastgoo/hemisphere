@@ -1,5 +1,6 @@
+using Revise
 using Test
-using .hemisphere
+using hemisphere
 @testset "hemisphere" begin
     
     include("testA.jl")

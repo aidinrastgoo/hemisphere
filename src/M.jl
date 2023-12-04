@@ -6,7 +6,50 @@ function A_kn(k, n)
     return numerator_k * denominator_n
 end
 
-function create_matrix(n, k)
+function create_matrixa(n, k)    # it's refixed matrix
+    if n == k
+        return 1.0 / (2n + 1)
+    elseif (n + k) % 2 == 0
+        return 0.0
+    else
+        t21 = (sin((π * n) / (2)) * cos((k * π) / (2))) / A_kn(k, n)
+        t22 = n * (n + 1) - k * (k + 1)
+        t23 = sin((k * π) / (2)) * cos((n * π) / (2)) * A_kn(k, n)
+        return (2 / π) * ((t21 / t22) - (t23 / t22))
+    end
+end
+
+function create_matrix(n, k)    # it's my editation
+    if n == k
+        return 1.0 / (2n + 1)
+
+    elseif (n + k) % 2 == 0
+        return 0.0
+
+    elseif n != 0 && k != 0
+        t21 = (sin(π / (2n)) * cos(π / (2k))) / A_kn(k, n)
+        t22 = n * (n + 1) - k * (k + 1)
+        t23 = sin(π / (2k)) * cos(π / (2n)) * A_kn(k, n)
+        return (2 / π) * ((t21 / t22) - (t23 / t22))
+
+    elseif n == 0 && k % 2 != 0
+         t21 = (sin(π / (2n+1)) * cos(π / (2k))) / A_kn(k, n)   # Here we have Error becaus we dont have Know the Value of π / (2n)  : t21 = (sin(π / (2n)) * cos(π / (2k))) / A_kn(k, n)
+         t22 = n * (n + 1) - k * (k + 1)  
+         t23 = sin(π / (2k)) * cos(π / (2n+1)) * A_kn(k, n) # Here we have Error becaus we dont have Know the Value of π / (2n) : t23 = sin(π / (2k)) * cos(π / (2n)) * A_kn(k, n)
+        return (2 / π) * (1/((n * (n + 1) )- (k * (k + 1)))) * ((t21 / t22) - (t23 / t22)) 
+
+    elseif k == 0 && n % 2 != 0
+        t21 = (sin(π / (2n)) * cos(π / (2k+1))) / A_kn(k, n)   # Here we have Error becaus we dont have Know the Value of π / (2k) : t21 = (sin(π / (2n)) * cos(π / (2k))) / A_kn(k, n)
+        t22 = n * (n + 1) - k * (k + 1)  
+        t23 = sin(π / (2k+1)) * cos(π / (2n)) * A_kn(k, n) # Here we have Error becaus we dont have Know the Value of π / (2k) : t23 = sin(π / (2k)) * cos(π / (2n)) * A_kn(k, n)
+        return (2 / π) * (1/((n * (n + 1) )- (k * (k + 1)))) # * ((t21 / t22) - (t23 / t22))  
+    end
+end
+
+
+
+
+function create_matrix_Old(n, k)    # it could be correct, if we writ all like the papier !!!!!
     if n == k
         return 1.0 / (2n + 1)
     elseif (n + k) % 2 == 0
@@ -51,6 +94,10 @@ function η_k(k, ε_r1, ε_r2)
     end
 end
 
+function calculate_η(k_max, ε_r1, ε_r2)
+    return [η_k(k, ε_r1, ε_r2) for k in 0:k_max-1]
+end
+
 function calculate_M(radius, ε_r1, ε_r2, n_max, k_max)
     U = generate_U_matrix(n_max, k_max)
     M = zeros(Float64, n_max, k_max)
@@ -65,5 +112,6 @@ function calculate_M(radius, ε_r1, ε_r2, n_max, k_max)
             M[n+1, k+1] = (radius^(-(n + 2))) * (term1 + term2 + term3 + term4) * U[n+1, k+1]
         end
     end
-    return @show M
+    return M
 end
+
